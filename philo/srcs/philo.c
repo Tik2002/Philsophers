@@ -6,7 +6,7 @@
 /*   By: tigpetro <tigpetro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 19:31:47 by tigpetro          #+#    #+#             */
-/*   Updated: 2024/04/29 19:39:53 by tigpetro         ###   ########.fr       */
+/*   Updated: 2024/04/30 20:09:29 by tigpetro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	main(int ac, char **av)
 {
 	int i = 0;
+	i++;
 	printf("before %d\n", i);
 	i = foo(i);
 	printf("after %d\n", i);

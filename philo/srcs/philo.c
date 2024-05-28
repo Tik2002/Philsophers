@@ -6,7 +6,7 @@
 /*   By: tigpetro <tigpetro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 19:31:47 by tigpetro          #+#    #+#             */
-/*   Updated: 2024/05/27 22:21:42 by tigpetro         ###   ########.fr       */
+/*   Updated: 2024/05/28 20:33:04 by tigpetro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	philo(int ac, char **av)
 
 int	main(int ac, char **av)
 {
-	t_proc	table;
+	t_table	table;
 
 	pars_philo(&table, ac, av);
 	// init(&table);

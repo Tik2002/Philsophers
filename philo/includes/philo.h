@@ -6,7 +6,7 @@
 /*   By: tigpetro <tigpetro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 17:59:50 by tigpetro          #+#    #+#             */
-/*   Updated: 2024/05/27 22:28:02 by tigpetro         ###   ########.fr       */
+/*   Updated: 2024/05/28 20:57:40 by tigpetro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,21 @@
 # include <string.h>
 # include <sys/time.h>
 # include <unistd.h>
+# include <errno.h>
+
+typedef enum	e_mod
+{
+	LOCK,
+	UNLOCK,
+	INIT,
+	DESTROY,
+	CREATE,
+	JOIN,
+	DETACH,
+}	t_mod;
 
 typedef pthread_mutex_t	t_mtx;
-typedef struct s_proc	t_proc;
+typedef struct s_table	t_table;
 typedef struct s_fork
 {
 	t_mtx	fork;
@@ -35,13 +47,13 @@ typedef struct s_philo
 	int			philo_id;
 	long		meal_counter;
 	long		time_to_die;
-	t_fork		*left;
-	t_fork		*right;
+	t_fork		*first_f;
+	t_fork		*second_f;
 	pthread_t	thread_id;
-	t_proc		*proc;
+	t_table		*table;
 }	t_philo;
 
-struct	s_proc
+struct	s_table
 {
 	long	philos_number;
 	long	time_to_die;
@@ -55,15 +67,20 @@ struct	s_proc
 };
 
 // philo_checks
-void	pars_philo(t_proc *table, int ac, char **av);
+void	pars_philo(t_table *table, int ac, char **av);
 
 // philo
 void	philo(int ac, char **av);
 
 // table_init
-void	table_init(t_proc *table);
+void	table_init(t_table *table);
 
 // philo_exit
-void	err(char *err_str);
+void	err(char *err_msg);
+
+// safe_funcs
+void	thread_handle(pthread_t *thread, void *(*foo)(void *), void *data, t_mod mod);
+void	mutex_handle(t_mtx *mtx, t_mod mod);
+void	*wrapper_init(int bytes);
 
 #endif // PHILO_H

@@ -6,14 +6,14 @@
 /*   By: tigpetro <tigpetro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 22:19:28 by tigpetro          #+#    #+#             */
-/*   Updated: 2024/05/27 22:19:45 by tigpetro         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:53:17 by tigpetro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philo.h>
 
-void	err(char *err_str)
+void	err(char *err_msg)
 {
-	printf("%s\n", err_str);
+	printf("%s\n", err_msg);
 	exit(1);
 }

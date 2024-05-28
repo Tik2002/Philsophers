@@ -6,7 +6,7 @@
 /*   By: tigpetro <tigpetro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 15:41:44 by tigpetro          #+#    #+#             */
-/*   Updated: 2024/05/27 22:25:57 by tigpetro         ###   ########.fr       */
+/*   Updated: 2024/05/28 20:33:01 by tigpetro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,15 @@ static int	ft_atoi(char *str)
 	while (ft_is_digit(str[i]))
 	{
 		buff = buff * 10 + (str[i++] - '0');
-		if (++count > 10)
+		if (++count >= 10 && buff > MAX)
 			err("Arg is greater than INT_MAX");
 	}
 	if (!buff)
 		err("Arg can't be equal to 0");
-	if (count == 10 && buff > MAX)
-		err("Arg is greater than INT_MAX");
 	return (buff);
 }
 
-void	pars_philo(t_proc *table, int ac, char **av)
+void	pars_philo(t_table *table, int ac, char **av)
 {
 	if (ac < 5 || ac > 6)
 		err("Wrong count of args");

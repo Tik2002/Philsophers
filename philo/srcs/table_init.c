@@ -6,7 +6,7 @@
 /*   By: tigpetro <tigpetro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 22:26:33 by tigpetro          #+#    #+#             */
-/*   Updated: 2024/05/28 20:58:40 by tigpetro         ###   ########.fr       */
+/*   Updated: 2024/05/30 18:59:52 by tigpetro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ void	table_init(t_table *table)
 
 	i = -1;
 	table->sim_end = 0;
+	table->philos_gathered = 0;
+	mutex_handle(&table->table_mutex, INIT);
 	table->philo = wrapper_init(sizeof(t_philo) * (table->philos_number));
 	table->fork = wrapper_init(sizeof(t_fork) * (table->philos_number));
 	while (++i < table->philos_number)

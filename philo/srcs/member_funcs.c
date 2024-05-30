@@ -1,19 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_exit.c                                       :+:      :+:    :+:   */
+/*   member_funcs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tigpetro <tigpetro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/27 22:19:28 by tigpetro          #+#    #+#             */
-/*   Updated: 2024/05/28 16:53:17 by tigpetro         ###   ########.fr       */
+/*   Created: 2024/05/30 19:00:02 by tigpetro          #+#    #+#             */
+/*   Updated: 2024/05/30 19:09:09 by tigpetro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philo.h>
 
-void	err(char *err_msg)
+void	set_bool(t_mtx *mtx, long *dest, long value)
 {
-	printf("%s\n", err_msg);
-	exit(1);
+	mutex_handle(mtx, LOCK);
+	*dest = value;
+	mutex_handle(mtx, UNLOCK);
+}
+
+long	get_bool(t_mtx *mtx, long *value)
+{
+	long res;
+
+	mutex_handle(mtx, LOCK);
+	res = *value;
+	mutex_handle(mtx, UNLOCK);
+	return (res);
+}
+
+int	sim_finished(t_table *table)
+{
+	return (get_bool(&table->table_mutex, &table->sim_end));
 }

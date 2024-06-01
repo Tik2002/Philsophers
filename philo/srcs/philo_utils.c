@@ -6,7 +6,7 @@
 /*   By: tigpetro <tigpetro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 19:34:31 by tigpetro          #+#    #+#             */
-/*   Updated: 2024/05/30 21:01:14 by tigpetro         ###   ########.fr       */
+/*   Updated: 2024/06/01 17:50:29 by tigpetro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	ft_usleep(long usec, t_table *table)
 	}
 }
 
-size_t	get_time(t_time_mod time_mod)
+long	get_time(t_time_mod time_mod)
 {
 	struct timeval time;
 
@@ -46,11 +46,10 @@ size_t	get_time(t_time_mod time_mod)
 		err("gettimeofday error");
 	if (time_mod == SECOND)
 		return (time.tv_sec + time.tv_usec / 1e6);
-	if (time_mod == MILLISECOND)
+	else if (time_mod == MILLISECOND)
 		return (1e3 * time.tv_sec + time.tv_usec / 1e3);
-	if (time_mod == MICROSECOND)
+	else if (time_mod == MICROSECOND)
 		return (1e6 * time.tv_sec + time.tv_usec);
-	else
-		err("Wrong time_mod");
+	err("Wrong time_mod");
 	return (42);
 }

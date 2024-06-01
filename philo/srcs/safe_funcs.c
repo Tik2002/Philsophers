@@ -6,7 +6,7 @@
 /*   By: tigpetro <tigpetro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 17:56:09 by tigpetro          #+#    #+#             */
-/*   Updated: 2024/05/28 20:24:28 by tigpetro         ###   ########.fr       */
+/*   Updated: 2024/06/01 19:38:53 by tigpetro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,9 @@ void	thread_handle(pthread_t *thread, void *(*foo)(void *), void *data,
 		t_mod mod)
 {
 	if (mod == CREATE)
-		thread_err_handle(pthread_creat(thread, NULL, foo, data), mod);
+		thread_err_handle(pthread_create(thread, NULL, foo, data), mod);
 	else if (mod == JOIN)
-		thread_err_handle(pthread_destroy(*thread, NULL), mod);
+		thread_err_handle(pthread_join(*thread, NULL), mod);
 	else if (mod == DETACH)
 		thread_err_handle(pthread_detach(*thread), mod);
 	else

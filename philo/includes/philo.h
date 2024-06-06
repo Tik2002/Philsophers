@@ -6,7 +6,7 @@
 /*   By: tigpetro <tigpetro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 17:59:50 by tigpetro          #+#    #+#             */
-/*   Updated: 2024/06/01 17:50:21 by tigpetro         ###   ########.fr       */
+/*   Updated: 2024/06/06 19:19:11 by tigpetro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,24 +74,26 @@ typedef struct s_philo
 
 struct	s_table
 {
-	long	philos_number;
-	long	time_to_die;
-	long	time_to_eat;
-	long	time_to_sleep;
-	long	sim_start;
-	long	sim_end;
-	long	philos_gathered;
-	t_mtx	table_mutex;
-	t_mtx	print_mutex;
-	t_philo	*philo;
-	t_fork	*fork;
-	int		eat_cycle;
+	long		philos_number;
+	long		time_to_die;
+	long		time_to_eat;
+	long		time_to_sleep;
+	long		sim_start;
+	long		sim_end;
+	long		philos_gathered;
+	long		threads_number;
+	pthread_t	monitor;
+	t_mtx		table_mutex;
+	t_mtx		print_mutex;
+	t_philo		*philo;
+	t_fork		*fork;
+	int			eat_cycle;
 };
 
 // philo_utils
-void	err(char *err_msg);
 long	get_time(t_time_mod time_mod);
 void	ft_usleep(long usec, t_table *table);
+void	*monitor_dinner(void *data);
 
 // philo_checks
 void	pars_philo(t_table *table, int ac, char **av);
@@ -108,15 +110,22 @@ void	mutex_handle(t_mtx *mtx, t_mod mod);
 void	*wrapper_init(int bytes);
 
 // dinner
+void	think(t_philo *philo, int flag);
 void	start_dinner(t_table *table);
 
-// member_functions
+// methods
 void	set_bool(t_mtx *mtx, long *dest, long value);
 long	get_bool(t_mtx *mtx, long *value);
 int		sim_finished(t_table *table);
 
-// gathered
+// methods_utils
 void	philos_gathered(t_table *table);
+long	threads_running(t_mtx *mutex, long *threads, long philo_number);
+void	threads_counter(t_mtx *mutex, long *value);
+void	de_synchronize_philos(t_philo *philo);
 
+// destroy
+void	destroy(t_table *table);
+void	err(char *err_msg);
 
 #endif // PHILO_H

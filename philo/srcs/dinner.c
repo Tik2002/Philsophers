@@ -6,55 +6,77 @@
 /*   By: tigpetro <tigpetro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 18:44:08 by tigpetro          #+#    #+#             */
-/*   Updated: 2024/06/01 20:31:35 by tigpetro         ###   ########.fr       */
+/*   Updated: 2024/06/06 19:35:26 by tigpetro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philo.h>
 
-static void	think(t_philo *philo)
+void	think(t_philo *philo, int flag)
 {
-	ft_print(philo, THINK);
+	long	t_eat;
+	long	t_sleep;
+	long	t_think;
+
+	if (!flag)
+		ft_print(philo, THINK);
+	if (philo->table->philos_number % 2 == 0)
+		return ;
+	t_eat = philo->table->time_to_eat;
+	t_sleep = philo->table->time_to_sleep;
+	t_think = (t_eat * 2) - t_sleep;
+	if (t_think < 0)
+		t_think = 0;
+	ft_usleep(t_think * 0.42, philo->table);
 }
 
 static void	eat(t_philo *philo)
 {
-	printf("eat check\n");
 	mutex_handle(&philo->first_f->fork, LOCK);
-	// pthread_mutex_lock(&philo->first_f->fork);
 	ft_print(philo, TAKE_FORK);
 	mutex_handle(&philo->second_f->fork, LOCK);
-	// pthread_mutex_lock(&philo->second_f->fork);
 	ft_print(philo, TAKE_FORK);
 	set_bool(&philo->philo_mutex, &philo->meal_time, get_time(MILLISECOND));
 	philo->meal_counter++;
 	ft_usleep(philo->table->time_to_eat, philo->table);
-	if (philo->table->eat_cycle > 0 && philo->meal_counter == philo->table->eat_cycle)
+	if (philo->table->eat_cycle > 0
+		&& philo->meal_counter == philo->table->eat_cycle)
 		set_bool(&philo->philo_mutex, &philo->full, 1);
 	mutex_handle(&philo->first_f->fork, UNLOCK);
 	mutex_handle(&philo->second_f->fork, UNLOCK);
-	// pthread_mutex_unlock(&philo->first_f->fork);
-	// pthread_mutex_unlock(&philo->second_f->fork);
 }
 
-void	*sim_dinner(void *data)
+static void	*alone(void *data)
 {
-	t_philo *philo;
-	int i = 0;
+	t_philo	*philo;
 
 	philo = (t_philo *)data;
 	philos_gathered(philo->table);
-	// printf("Gathered!\n");
-	while (sim_finished(philo->table))
-	{
+	set_bool(&philo->philo_mutex, &philo->meal_time, get_time(MILLISECOND));
+	threads_counter(&philo->table->table_mutex, &philo->table->threads_number);
+	ft_print(philo, TAKE_FORK);
+	while (!sim_finished(philo->table))
+		ft_usleep(200, philo->table);
+	return (0);
+}
 
-		if (!philo->full)
+static void	*sim_dinner(void *data)
+{
+	t_philo	*philo;
+
+	philo = (t_philo *)data;
+	philos_gathered(philo->table);
+	set_bool(&philo->philo_mutex, &philo->meal_time, get_time(MILLISECOND));
+	threads_counter(&philo->table->table_mutex, &philo->table->threads_number);
+	de_synchronize_philos(philo);
+	while (!sim_finished(philo->table))
+	{
+		if (get_bool(&philo->philo_mutex, &philo->full))
 			break ;
 		eat(philo);
-		// sleep(philo);
 		ft_print(philo, SLEEP);
 		ft_usleep(philo->table->time_to_sleep, philo->table);
-		think(philo);
+		think(philo, 0);
 	}
 	return (0);
 }
@@ -65,19 +87,18 @@ void	start_dinner(t_table *table)
 
 	i = -1;
 	if (table->philos_number == 1)
-		;
+		thread_handle(&table->philo[0].thread_id, alone, &table->philo[0],
+			CREATE);
 	else
-	{
 		while (++i < table->philos_number)
-			thread_handle(&table->philo[i].thread_id, sim_dinner, &table->philo,
-				CREATE);
-	}
+			thread_handle(&table->philo[i].thread_id, sim_dinner,
+				&table->philo[i], CREATE);
+	thread_handle(&table->monitor, monitor_dinner, table, CREATE);
 	table->sim_start = get_time(MILLISECOND);
 	set_bool(&table->table_mutex, &table->philos_gathered, 1);
-		printf("start dinner check\n");
 	i = -1;
 	while (++i < table->philos_number)
-		thread_handle(&table->philo[i].thread_id, NULL, NULL,
-			JOIN);
-	printf("check dinner\n");
+		thread_handle(&table->philo[i].thread_id, NULL, NULL, JOIN);
+	set_bool(&table->table_mutex, &table->sim_end, 1);
+	thread_handle(&table->monitor, NULL, NULL, JOIN);
 }

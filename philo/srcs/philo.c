@@ -6,7 +6,7 @@
 /*   By: tigpetro <tigpetro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 19:31:47 by tigpetro          #+#    #+#             */
-/*   Updated: 2024/06/01 20:32:41 by tigpetro         ###   ########.fr       */
+/*   Updated: 2024/06/06 19:02:32 by tigpetro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,6 @@ int	main(int ac, char **av)
 	pars_philo(&table, ac, av);
 	table_init(&table);
 	start_dinner(&table);
-	// destroy(&table);
+	destroy(&table);
 	return (0);
 }

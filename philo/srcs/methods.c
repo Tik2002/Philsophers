@@ -6,7 +6,7 @@
 /*   By: tigpetro <tigpetro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:00:02 by tigpetro          #+#    #+#             */
-/*   Updated: 2024/06/01 20:31:58 by tigpetro         ###   ########.fr       */
+/*   Updated: 2024/06/06 18:34:51 by tigpetro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,8 @@ long	get_bool(t_mtx *mtx, long *value)
 {
 	long res;
 
-	printf("get_bool lock\n");
 	mutex_handle(mtx, LOCK);
-	// pthread_mutex_lock(mtx);
 	res = *value;
-	// pthread_mutex_unlock(mtx);
-	// printf("get_bool unlock\n");
 	mutex_handle(mtx, UNLOCK);
 	return (res);
 }

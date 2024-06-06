@@ -5,8 +5,8 @@ SRCS = $(wildcard $(SRCSPATH)*.c)
 OBJS = $(patsubst $(SRCSPATH)%.c,$(SRCSPATH)%.o,$(SRCS))
 
 CC = cc
-CFLAGS = -g -pthread -c $(foreach H,$(INCPATH),-I$(H))
-#-Wall -Wextra -Werror
+CFLAGS = -g -Wall -Wextra -Werror -pthread -c $(foreach H,$(INCPATH),-I$(H))
+#-fsanitize=thread
 all : $(NAME)
 
 $(NAME) : $(OBJS)

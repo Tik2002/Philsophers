@@ -1,25 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   destroy.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tigpetro <tigpetro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/01 17:59:50 by tigpetro          #+#    #+#             */
-/*   Updated: 2024/04/29 19:42:16 by tigpetro         ###   ########.fr       */
+/*   Created: 2024/06/06 19:02:41 by tigpetro          #+#    #+#             */
+/*   Updated: 2024/06/06 19:05:30 by tigpetro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#include <philo.h>
 
-# include <pthread.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <sys/time.h>
+void	err(char *err_msg)
+{
+	printf("%s\n", err_msg);
+	exit(1);
+}
 
-// philo
-int foo(int i);
+void	destroy(t_table *table)
+{
+	t_philo	*philo;
+	int		i;
 
-#endif //PHILO_H
+	i = -1;
+	while (++i < table->philos_number)
+	{
+		philo = table->philo + i;
+		mutex_handle(&philo->philo_mutex, DESTROY);
+	}
+	mutex_handle(&table->print_mutex, DESTROY);
+	mutex_handle(&table->table_mutex, DESTROY);
+	free(table->fork);
+	free(table->philo);
+}

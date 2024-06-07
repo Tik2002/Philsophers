@@ -6,7 +6,7 @@
 /*   By: tigpetro <tigpetro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 19:34:31 by tigpetro          #+#    #+#             */
-/*   Updated: 2024/06/06 19:43:44 by tigpetro         ###   ########.fr       */
+/*   Updated: 2024/06/07 13:59:13 by tigpetro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static long	philo_died(t_philo *philo)
 
 	if (get_bool(&philo->philo_mutex, &philo->full))
 		return (0);
-	elapsed = get_time(MILLISECOND) - get_bool(&philo->philo_mutex,
+	elapsed = get_time(MILLISECOND) - get_long(&philo->philo_mutex,
 			&philo->meal_time);
 	t_to_die = philo->table->time_to_die / 1e3;
 	if (elapsed > t_to_die)

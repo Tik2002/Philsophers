@@ -6,13 +6,13 @@
 /*   By: tigpetro <tigpetro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 18:44:08 by tigpetro          #+#    #+#             */
-/*   Updated: 2024/06/06 19:35:26 by tigpetro         ###   ########.fr       */
+/*   Updated: 2024/06/07 14:03:34 by tigpetro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philo.h>
 
-void	think(t_philo *philo, int flag)
+void	think(t_philo *philo, short flag)
 {
 	long	t_eat;
 	long	t_sleep;
@@ -27,7 +27,7 @@ void	think(t_philo *philo, int flag)
 	t_think = (t_eat * 2) - t_sleep;
 	if (t_think < 0)
 		t_think = 0;
-	ft_usleep(t_think * 0.42, philo->table);
+	ft_usleep(t_think * 0.1, philo->table);
 }
 
 static void	eat(t_philo *philo)
@@ -36,7 +36,8 @@ static void	eat(t_philo *philo)
 	ft_print(philo, TAKE_FORK);
 	mutex_handle(&philo->second_f->fork, LOCK);
 	ft_print(philo, TAKE_FORK);
-	set_bool(&philo->philo_mutex, &philo->meal_time, get_time(MILLISECOND));
+	set_long(&philo->philo_mutex, &philo->meal_time, get_time(MILLISECOND));
+	ft_print(philo, EAT);
 	philo->meal_counter++;
 	ft_usleep(philo->table->time_to_eat, philo->table);
 	if (philo->table->eat_cycle > 0
@@ -52,7 +53,7 @@ static void	*alone(void *data)
 
 	philo = (t_philo *)data;
 	philos_gathered(philo->table);
-	set_bool(&philo->philo_mutex, &philo->meal_time, get_time(MILLISECOND));
+	set_long(&philo->philo_mutex, &philo->meal_time, get_time(MILLISECOND));
 	threads_counter(&philo->table->table_mutex, &philo->table->threads_number);
 	ft_print(philo, TAKE_FORK);
 	while (!sim_finished(philo->table))
@@ -66,7 +67,7 @@ static void	*sim_dinner(void *data)
 
 	philo = (t_philo *)data;
 	philos_gathered(philo->table);
-	set_bool(&philo->philo_mutex, &philo->meal_time, get_time(MILLISECOND));
+	set_long(&philo->philo_mutex, &philo->meal_time, get_time(MILLISECOND));
 	threads_counter(&philo->table->table_mutex, &philo->table->threads_number);
 	de_synchronize_philos(philo);
 	while (!sim_finished(philo->table))

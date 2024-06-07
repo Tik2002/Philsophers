@@ -6,7 +6,7 @@ OBJS = $(patsubst $(SRCSPATH)%.c,$(SRCSPATH)%.o,$(SRCS))
 
 CC = cc
 CFLAGS = -g -Wall -Wextra -Werror -pthread -c $(foreach H,$(INCPATH),-I$(H))
-#-fsanitize=thread
+# -fsanitize=thread -fsanitize=address
 all : $(NAME)
 
 $(NAME) : $(OBJS)

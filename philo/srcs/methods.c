@@ -1,27 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   member_funcs.c                                     :+:      :+:    :+:   */
+/*   methods.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tigpetro <tigpetro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:00:02 by tigpetro          #+#    #+#             */
-/*   Updated: 2024/06/06 18:34:51 by tigpetro         ###   ########.fr       */
+/*   Updated: 2024/06/07 13:43:40 by tigpetro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philo.h>
 
-void	set_bool(t_mtx *mtx, long *dest, long value)
+void	set_long(t_mtx *mtx, long *dest, long value)
 {
 	mutex_handle(mtx, LOCK);
 	*dest = value;
 	mutex_handle(mtx, UNLOCK);
 }
 
-long	get_bool(t_mtx *mtx, long *value)
+long	get_long(t_mtx *mtx, long *value)
 {
 	long res;
+
+	mutex_handle(mtx, LOCK);
+	res = *value;
+	mutex_handle(mtx, UNLOCK);
+	return (res);
+}
+
+void	set_bool(t_mtx *mtx, short *dest, short value)
+{
+	mutex_handle(mtx, LOCK);
+	*dest = value;
+	mutex_handle(mtx, UNLOCK);
+}
+
+short	get_bool(t_mtx *mtx, short *value)
+{
+	short res;
 
 	mutex_handle(mtx, LOCK);
 	res = *value;

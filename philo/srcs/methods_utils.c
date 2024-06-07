@@ -6,7 +6,7 @@
 /*   By: tigpetro <tigpetro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:12:28 by tigpetro          #+#    #+#             */
-/*   Updated: 2024/06/06 19:13:33 by tigpetro         ###   ########.fr       */
+/*   Updated: 2024/06/07 13:56:50 by tigpetro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void	philos_gathered(t_table *table)
 		;
 }
 
-long	threads_running(t_mtx *mutex, long *threads, long philo_number)
+long	threads_running(t_mtx *mutex, short *threads, long philo_number)
 {
-	long res;
+	short res;
 
 	res = 0;
 	mutex_handle(mutex, LOCK);
@@ -30,7 +30,7 @@ long	threads_running(t_mtx *mutex, long *threads, long philo_number)
 	return (res);
 }
 
-void	threads_counter(t_mtx *mutex, long *value)
+void	threads_counter(t_mtx *mutex, short *value)
 {
 	mutex_handle(mutex, LOCK);
 	(*value)++;

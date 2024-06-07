@@ -6,7 +6,7 @@
 /*   By: tigpetro <tigpetro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 17:59:50 by tigpetro          #+#    #+#             */
-/*   Updated: 2024/06/06 19:19:11 by tigpetro         ###   ########.fr       */
+/*   Updated: 2024/06/07 13:57:08 by tigpetro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ typedef struct s_fork
 typedef struct s_philo
 {
 	int			philo_id;
-	long		full;
+	short		full;
 	long		meal_counter;
 	long		meal_time;
 	long		time_to_die;
@@ -74,14 +74,14 @@ typedef struct s_philo
 
 struct	s_table
 {
-	long		philos_number;
+	short		philos_number;
 	long		time_to_die;
 	long		time_to_eat;
 	long		time_to_sleep;
 	long		sim_start;
-	long		sim_end;
-	long		philos_gathered;
-	long		threads_number;
+	short		sim_end;
+	short		philos_gathered;
+	short		threads_number;
 	pthread_t	monitor;
 	t_mtx		table_mutex;
 	t_mtx		print_mutex;
@@ -110,18 +110,20 @@ void	mutex_handle(t_mtx *mtx, t_mod mod);
 void	*wrapper_init(int bytes);
 
 // dinner
-void	think(t_philo *philo, int flag);
+void	think(t_philo *philo, short flag);
 void	start_dinner(t_table *table);
 
 // methods
-void	set_bool(t_mtx *mtx, long *dest, long value);
-long	get_bool(t_mtx *mtx, long *value);
+void	set_long(t_mtx *mtx, long *dest, long value);
+long	get_long(t_mtx *mtx, long *value);
+void	set_bool(t_mtx *mtx, short *dest, short value);
+short	get_bool(t_mtx *mtx, short *value);
 int		sim_finished(t_table *table);
 
 // methods_utils
 void	philos_gathered(t_table *table);
-long	threads_running(t_mtx *mutex, long *threads, long philo_number);
-void	threads_counter(t_mtx *mutex, long *value);
+long	threads_running(t_mtx *mutex, short *threads, long philo_number);
+void	threads_counter(t_mtx *mutex, short *value);
 void	de_synchronize_philos(t_philo *philo);
 
 // destroy

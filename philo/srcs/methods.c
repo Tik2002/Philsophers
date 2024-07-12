@@ -6,7 +6,7 @@
 /*   By: tigpetro <tigpetro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:00:02 by tigpetro          #+#    #+#             */
-/*   Updated: 2024/06/07 13:43:40 by tigpetro         ###   ########.fr       */
+/*   Updated: 2024/06/07 14:17:03 by tigpetro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	set_long(t_mtx *mtx, long *dest, long value)
 
 long	get_long(t_mtx *mtx, long *value)
 {
-	long res;
+	long	res;
 
 	mutex_handle(mtx, LOCK);
 	res = *value;
@@ -38,7 +38,7 @@ void	set_bool(t_mtx *mtx, short *dest, short value)
 
 short	get_bool(t_mtx *mtx, short *value)
 {
-	short res;
+	short	res;
 
 	mutex_handle(mtx, LOCK);
 	res = *value;

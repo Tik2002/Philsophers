@@ -6,7 +6,7 @@
 /*   By: tigpetro <tigpetro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 17:59:50 by tigpetro          #+#    #+#             */
-/*   Updated: 2024/06/07 13:57:08 by tigpetro         ###   ########.fr       */
+/*   Updated: 2024/07/12 15:22:37 by tigpetro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <unistd.h>
 # include <errno.h>
 
-typedef enum	e_mod
+typedef enum e_mod
 {
 	LOCK,
 	UNLOCK,
@@ -34,14 +34,14 @@ typedef enum	e_mod
 	DETACH,
 }	t_mod;
 
-typedef enum	e_time_mod
+typedef enum e_time_mod
 {
 	SECOND,
 	MILLISECOND,
 	MICROSECOND,
 }	t_time_mod;
 
-typedef enum	e_print_mod
+typedef enum e_print_mod
 {
 	EAT,
 	SLEEP,
@@ -105,7 +105,8 @@ void	ft_print(t_philo *philo, t_print_mod mod);
 void	table_init(t_table *table);
 
 // safe_funcs
-void	thread_handle(pthread_t *thread, void *(*foo)(void *), void *data, t_mod mod);
+void	thread_handle(pthread_t *thread, void *(*foo)(void *),
+			void *data, t_mod mod);
 void	mutex_handle(t_mtx *mtx, t_mod mod);
 void	*wrapper_init(int bytes);
 

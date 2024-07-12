@@ -6,7 +6,7 @@
 /*   By: tigpetro <tigpetro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 19:34:31 by tigpetro          #+#    #+#             */
-/*   Updated: 2024/06/07 13:59:13 by tigpetro         ###   ########.fr       */
+/*   Updated: 2024/06/07 14:18:24 by tigpetro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,25 +25,26 @@ void	ft_usleep(long usec, t_table *table)
 			break ;
 		elapsed = get_time(MICROSECOND) - start;
 		rem = usec - elapsed;
-		if (rem > 1e3)
-			usleep (usec / 2);
+		if (rem > 1e4)
+			usleep(rem / 2);
 		else
-			while (get_time(MICROSECOND) - start < usec);
+			while (get_time(MICROSECOND) - start < usec)
+				;
 	}
 }
 
 long	get_time(t_time_mod time_mod)
 {
-	struct timeval time;
+	struct timeval	time;
 
-	if (gettimeofday(&time, NULL) == -1)
+	if (gettimeofday(&time, NULL))
 		err("gettimeofday error");
-	if (time_mod == SECOND)
-		return (time.tv_sec + time.tv_usec / 1e6);
-	else if (time_mod == MILLISECOND)
-		return (1e3 * time.tv_sec + time.tv_usec / 1e3);
+	if (time_mod == MILLISECOND)
+		return (time.tv_sec * 1e3 + time.tv_usec / 1e3);
 	else if (time_mod == MICROSECOND)
-		return (1e6 * time.tv_sec + time.tv_usec);
+		return (time.tv_sec * 1e6 + time.tv_usec);
+	else if (time_mod == SECOND)
+		return (time.tv_sec + time.tv_usec / 1e6);
 	err("Wrong time_mod");
 	return (42);
 }
@@ -69,8 +70,8 @@ void	*monitor_dinner(void *data)
 	int		i;
 
 	table = (t_table *)data;
-
-	while (!threads_running(&table->table_mutex, &table->threads_number, table->philos_number))
+	while (!threads_running(&table->table_mutex, &table->threads_number,
+			table->philos_number))
 		;
 	while (!sim_finished(table))
 	{
@@ -84,6 +85,5 @@ void	*monitor_dinner(void *data)
 			}
 		}
 	}
-
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: tigpetro <tigpetro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 15:41:44 by tigpetro          #+#    #+#             */
-/*   Updated: 2024/06/07 13:57:26 by tigpetro         ###   ########.fr       */
+/*   Updated: 2024/06/07 14:17:34 by tigpetro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	pars_philo(t_table *table, int ac, char **av)
 	if (ac < 5 || ac > 6)
 		err("Wrong count of args");
 	table->philos_number = ft_atoi(av[1]);
-
 	table->time_to_die = ft_atoi(av[2]) * 1e3;
 	table->time_to_eat = ft_atoi(av[3]) * 1e3;
 	table->time_to_sleep = ft_atoi(av[4]) * 1e3;

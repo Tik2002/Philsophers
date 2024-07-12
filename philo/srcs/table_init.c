@@ -6,7 +6,7 @@
 /*   By: tigpetro <tigpetro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 22:26:33 by tigpetro          #+#    #+#             */
-/*   Updated: 2024/06/06 19:39:04 by tigpetro         ###   ########.fr       */
+/*   Updated: 2024/06/07 14:48:42 by tigpetro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ static void	assaign_forks(t_philo *philo, t_fork *fork, int index)
 
 static void	philo_init(t_table *table)
 {
-	int	i;
-	t_philo *philo;
+	int		i;
+	t_philo	*philo;
 
 	i = -1;
 	while (++i < table->philos_number)
@@ -50,7 +50,7 @@ void	table_init(t_table *table)
 	i = -1;
 	table->sim_end = 0;
 	table->philos_gathered = 0;
-	table-> threads_number = 0;
+	table->threads_number = 0;
 	table->philo = wrapper_init(sizeof(t_philo) * (table->philos_number));
 	table->fork = wrapper_init(sizeof(t_fork) * (table->philos_number));
 	mutex_handle(&table->table_mutex, INIT);

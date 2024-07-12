@@ -6,7 +6,7 @@
 /*   By: tigpetro <tigpetro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 18:44:08 by tigpetro          #+#    #+#             */
-/*   Updated: 2024/06/07 14:03:34 by tigpetro         ###   ########.fr       */
+/*   Updated: 2024/06/07 14:11:47 by tigpetro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	think(t_philo *philo, short flag)
 	t_think = (t_eat * 2) - t_sleep;
 	if (t_think < 0)
 		t_think = 0;
-	ft_usleep(t_think * 0.1, philo->table);
+	ft_usleep(t_think * 0.42, philo->table);
 }
 
 static void	eat(t_philo *philo)

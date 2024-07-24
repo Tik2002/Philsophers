@@ -6,7 +6,7 @@
 /*   By: tigpetro <tigpetro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 22:26:33 by tigpetro          #+#    #+#             */
-/*   Updated: 2024/06/07 14:48:42 by tigpetro         ###   ########.fr       */
+/*   Updated: 2024/07/22 23:26:48 by tigpetro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,15 @@ static void	assaign_forks(t_philo *philo, t_fork *fork, int index)
 	int	nbr;
 
 	nbr = philo->table->philos_number;
-	philo->first_f = &fork[(index + 1) % nbr];
-	philo->second_f = &fork[index];
 	if (philo->philo_id % 2 == 0)
 	{
 		philo->first_f = &fork[index];
 		philo->second_f = &fork[(index + 1) % nbr];
+	}
+	else
+	{
+		philo->first_f = &fork[(index + 1) % nbr];
+		philo->second_f = &fork[index];
 	}
 }
 
@@ -39,6 +42,7 @@ static void	philo_init(t_table *table)
 		philo->meal_counter = 0;
 		mutex_handle(&philo->philo_mutex, INIT);
 		philo->table = table;
+		philo->full = 0;
 		assaign_forks(philo, table->fork, i);
 	}
 }

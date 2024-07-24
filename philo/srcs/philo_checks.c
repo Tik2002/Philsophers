@@ -6,7 +6,7 @@
 /*   By: tigpetro <tigpetro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 15:41:44 by tigpetro          #+#    #+#             */
-/*   Updated: 2024/06/07 14:17:34 by tigpetro         ###   ########.fr       */
+/*   Updated: 2024/07/24 15:58:05 by tigpetro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,31 +36,36 @@ static int	ft_atoi(char *str)
 	if (str[i] == '+')
 		i++;
 	if (!ft_is_digit(str[i]))
-		err("Wrong type of args");
+		return (print_err("Wrong type of args"));
 	while (ft_is_digit(str[i]))
 	{
 		buff = buff * 10 + (str[i++] - '0');
 		if (++count >= 10 && buff > MAX)
-			err("Arg is greater than INT_MAX");
+			return (print_err("Arg is greater than INT_MAX"));
 	}
 	if (!buff)
-		err("Arg can't be equal to 0");
+		return (print_err("Arg can't be equal to 0"));
 	return (buff);
 }
 
-void	pars_philo(t_table *table, int ac, char **av)
+int	pars_philo(t_table *table, int ac, char **av)
 {
 	if (ac < 5 || ac > 6)
-		err("Wrong count of args");
+		return (print_err("Wrong count of args"));
 	table->philos_number = ft_atoi(av[1]);
 	table->time_to_die = ft_atoi(av[2]) * 1e3;
 	table->time_to_eat = ft_atoi(av[3]) * 1e3;
 	table->time_to_sleep = ft_atoi(av[4]) * 1e3;
-	if (table->time_to_die < 6e4 || table->time_to_eat < 6e4
-		|| table->time_to_sleep < 6e4)
-		err("Use timestamps greater than 60ms");
 	if (av[5])
 		table->eat_cycle = ft_atoi(av[5]);
 	else
 		table->eat_cycle = -1;
+	if (table->philos_number == -2 || table->time_to_die == -2 * 1e3
+		|| table->time_to_eat == -2 * 1e3 || table->time_to_sleep == -2 * 1e3
+		|| table->eat_cycle == -2)
+		return (1);
+	if (table->time_to_die < 6e4 || table->time_to_eat < 6e4
+		|| table->time_to_sleep < 6e4)
+		return (print_err("Use timestamps greater than 60ms"));
+	return (0);
 }

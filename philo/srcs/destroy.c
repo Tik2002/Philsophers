@@ -6,7 +6,7 @@
 /*   By: tigpetro <tigpetro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 19:02:41 by tigpetro          #+#    #+#             */
-/*   Updated: 2024/06/07 17:04:39 by tigpetro         ###   ########.fr       */
+/*   Updated: 2024/07/24 15:52:47 by tigpetro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,13 @@
 void	err(char *err_msg)
 {
 	printf("%s\n", err_msg);
-	exit(1);
+	assert(0);
+}
+
+int	print_err(char *err_msg)
+{
+	printf("%s\n", err_msg);
+	return (-2);
 }
 
 void	destroy(t_table *table)

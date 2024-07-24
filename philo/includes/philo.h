@@ -6,7 +6,7 @@
 /*   By: tigpetro <tigpetro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 17:59:50 by tigpetro          #+#    #+#             */
-/*   Updated: 2024/07/12 15:22:37 by tigpetro         ###   ########.fr       */
+/*   Updated: 2024/07/23 17:53:27 by tigpetro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <sys/time.h>
 # include <unistd.h>
 # include <errno.h>
+# include <assert.h>
 
 typedef enum e_mod
 {
@@ -96,7 +97,7 @@ void	ft_usleep(long usec, t_table *table);
 void	*monitor_dinner(void *data);
 
 // philo_checks
-void	pars_philo(t_table *table, int ac, char **av);
+int		pars_philo(t_table *table, int ac, char **av);
 
 // print
 void	ft_print(t_philo *philo, t_print_mod mod);
@@ -130,5 +131,6 @@ void	de_synchronize_philos(t_philo *philo);
 // destroy
 void	destroy(t_table *table);
 void	err(char *err_msg);
+int		print_err(char *err_msg);
 
 #endif // PHILO_H

@@ -1,3 +1,12 @@
+RESET = \033[0m
+RED = \033[31m
+GREEN = \033[32m
+YELLOW = \033[33m
+BLUE = \033[34m
+MAGENTA = \033[35m
+CYAN = \033[36m
+WHITE = \033[37m
+
 NAME = philo
 SRCSPATH = ./srcs/
 INCPATH = ./includes/
@@ -6,20 +15,24 @@ OBJS = $(patsubst $(SRCSPATH)%.c,$(SRCSPATH)%.o,$(SRCS))
 
 CC = cc
 CFLAGS = -g -Wall -Wextra -Werror -pthread -c $(foreach H,$(INCPATH),-I$(H))
-# -fsanitize=thread -fsanitize=address
+# -fsanitize=address -fsanitize=thread
 all : $(NAME)
 
 $(NAME) : $(OBJS)
-	$(CC) $(OBJS) -o $(NAME)
+	@echo "$(GREEN)Executable file is ready$(RESET)"
+	@$(CC) -g $(OBJS) -o $(NAME)
 
 $(SRCSPATH)%.o : $(SRCSPATH)%.c
-	$(CC) $(CFLAGS) $< -o $@
+	@echo "$(YELLOW)Object file is ready$(RESET)"
+	@$(CC) $(CFLAGS) $< -o $@
 
 clean :
-	rm -f $(OBJS)
+	@echo "$(RED)Object files have been removed $(RESET)"
+	@rm -f $(OBJS)
 
 fclean : clean
-	rm -f $(NAME)
+	@echo "$(RED)Executable file has been removed $(RESET)"
+	@rm -f $(NAME)
 
 re : fclean all
 

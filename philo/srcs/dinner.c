@@ -6,7 +6,7 @@
 /*   By: tigpetro <tigpetro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 18:44:08 by tigpetro          #+#    #+#             */
-/*   Updated: 2024/06/07 14:11:47 by tigpetro         ###   ########.fr       */
+/*   Updated: 2024/07/22 23:25:51 by tigpetro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,9 @@ void	start_dinner(t_table *table)
 		while (++i < table->philos_number)
 			thread_handle(&table->philo[i].thread_id, sim_dinner,
 				&table->philo[i], CREATE);
-	thread_handle(&table->monitor, monitor_dinner, table, CREATE);
 	table->sim_start = get_time(MILLISECOND);
 	set_bool(&table->table_mutex, &table->philos_gathered, 1);
+	thread_handle(&table->monitor, monitor_dinner, table, CREATE);
 	i = -1;
 	while (++i < table->philos_number)
 		thread_handle(&table->philo[i].thread_id, NULL, NULL, JOIN);
